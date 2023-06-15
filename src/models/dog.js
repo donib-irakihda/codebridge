@@ -13,13 +13,13 @@ const Dog = sequelize.define("Dog", {
     allowNull: false,
   },
   tail_length: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     validate: {
       min: 0,
     },
   },
   weight: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
 });
