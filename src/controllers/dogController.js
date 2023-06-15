@@ -4,22 +4,42 @@ const Dog = require("../models/dog");
 
 const getDogs = async (req, res) => {
   try {
-    const { attribute, order } = req.query;
+    const { attribute, order, pageNumber, limit } = req.query;
 
-    // Determine the sorting order
+    // Determine the sorting order and attribute
     const sortOrder = order === "desc" ? "DESC" : "ASC";
-
     const sortAttribute = attribute || "id";
+
+    // Calculate the offset for pagination
+    const offset = pageNumber
+      ? (parseInt(pageNumber) - 1) * parseInt(limit)
+      : 0;
 
     const dogs = await Dog.findAll({
       attributes: ["name", "color", "tail_length", "weight"],
       raw: true,
       order: [[sortAttribute, sortOrder]],
+
+      limit: parseInt(limit),
+      offset: parseInt(offset),
     });
 
-    res.status(200).json(dogs);
+    // Total number of counts
+    const totalCount = await Dog.count();
+
+    // Total number of pages
+    const totalPages = Math.ceil(totalCount / parseInt(limit));
+
+    res.status(200).json({
+      dogs,
+      current_page: parseInt(pageNumber) || 1,
+      total_pages: totalPages || 1,
+    });
   } catch (error) {
-    res.status(500).json({ error: "Error while fetching dogs! " });
+    res.status(500).json({
+      error: "Error while fetching dogs! ",
+      errorMessage: error.message,
+    });
     console.log(error);
   }
 };
