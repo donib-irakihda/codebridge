@@ -4,9 +4,17 @@ const Dog = require("../models/dog");
 
 const getDogs = async (req, res) => {
   try {
+    const { attribute, order } = req.query;
+
+    // Determine the sorting order
+    const sortOrder = order === "desc" ? "DESC" : "ASC";
+
+    const sortAttribute = attribute || "id";
+
     const dogs = await Dog.findAll({
       attributes: ["name", "color", "tail_length", "weight"],
       raw: true,
+      order: [[sortAttribute, sortOrder]],
     });
 
     res.status(200).json(dogs);
