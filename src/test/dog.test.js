@@ -77,7 +77,7 @@ describe("POST /dogs", () => {
     expect(res.body.error).toBe("A dog with the same name already exists.");
   }, 600000);
 
-  test.only("should return error when provided invalid data", async () => {
+  test("should return error when provided invalid data", async () => {
     const invalidData = {
       name: "",
       color: 25,
