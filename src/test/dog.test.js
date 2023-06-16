@@ -42,7 +42,7 @@ describe("GET /dogs", () => {
   test("should return the list of dogs", async () => {
     const response = await request(app).get("/dogs");
 
-    console.log(response.body);
+    // console.log(response.body);
     expect(response.status).toBe(200);
     expect(Array.isArray(response.body.dogs)).toBe(true);
   });
