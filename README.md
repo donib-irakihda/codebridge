@@ -1,16 +1,36 @@
+# CodeBridge Task
+
 ## Getting Started
 
-### Clone the Repository
+To get started with the CodeBridge API, follow the instructions below.
 
-```
-git clone https://github.com/donib-irakihda/codebridge.git
-```
+### Prerequisites
 
-### Set Up Environment Variables
+Before running the application, make sure you have the following software installed:
 
-1. Create your own MS SQL database.
-2. Provide the database details in the `.env` file located in the project's root directory:
+- Node.js (v14 or higher)
+- npm (Node Package Manager)
+- MS SQL Server
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/donib-irakihda/codebridge.git
    ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd codebridge
+   ```
+
+3. Set up environment variables:
+
+   Create a file named `.env` in the project root directory and provide the following details for your MS SQL database:
+
+   ```plaintext
    DB_NAME=<your_database_name>
    DB_USERNAME=<your_database_username>
    DB_HOST=localhost
@@ -18,36 +38,69 @@ git clone https://github.com/donib-irakihda/codebridge.git
    PORT=3000
    ```
 
-### Installation
+   Replace `<your_database_name>`, `<your_database_username>`, and `<your_database_password>` with your own database credentials.
 
-Install the project dependencies:
+4. Install the dependencies:
 
-```
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-## Usage
+5. Populate the database with seed data:
 
-### Run the Project
+   ```bash
+   npm run seed
+   ```
 
-```
-npm run dev
-```
+   This command will populate the database with sample data for testing purposes.
 
-The project will be accessible at http://localhost:3000.
+6. Start the application:
 
-### Run the Tests
+   ```bash
+   npm run dev
+   ```
 
-```
+   The API will now be accessible at `http://localhost:3000`.
+
+### API Documentation
+
+The CodeBridge API provides the following endpoints:
+
+- **GET /ping**: Retrieves the server status.
+
+  ```bash
+  curl http://localhost:3000/ping
+  ```
+
+  Expected response: `Dogshouseservice.Version1.0.1`
+
+- **GET /dogs**: Retrieves the list of dogs.
+
+  ```bash
+  curl http://localhost:3000/dogs
+  ```
+
+  Expected response: An array of dogs in JSON format.
+
+- **POST /dogs**: Creates a new dog.
+
+  ```bash
+  curl -X POST -H "Content-Type: application/json" -d '{
+    "name": "Doggy",
+    "color": "red",
+    "tail_length": 173,
+    "weight": 33
+  }' http://localhost:3000/dogs
+  ```
+
+  Expected response: A success message with the newly created dog's details in JSON format.
+
+## Testing
+
+To run the tests for the CodeBridge API, use the following command:
+
+```bash
 npm test
 ```
 
-### Seed the Database
-
-```
-npm run seed
-```
-
-This command will populate the database with sample data.
-
-Please note that you should replace `<your_database_name>`, `<your_database_username>`, and `<your_database_password>` with your actual database information.
+This will execute the test suite and display the test results.
